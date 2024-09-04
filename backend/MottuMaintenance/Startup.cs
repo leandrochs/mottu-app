@@ -1,5 +1,3 @@
-// C:\Users\3silv\Documents\DEVELOPER\GitHub\mottu-app\backend\MottuMaintenance\Startup.cs
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +24,16 @@ namespace MottuMaintenance
 
             services.AddControllers();
 
-            // Adicione outras configurações de serviço conforme necessário
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularOrigins",
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -38,6 +45,7 @@ namespace MottuMaintenance
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseCors("AllowAngularOrigins");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
