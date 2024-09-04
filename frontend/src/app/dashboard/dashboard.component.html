@@ -1,0 +1,31 @@
+<h1>Dashboard Mottu Manutenção</h1>
+
+<div class="dashboard-section">
+  <h2>Mecânicos</h2>
+  <p>Total de Mecânicos: {{ totalMecanicos }}</p>
+  <div *ngIf="mecanicoMaisEficiente">
+    <h3>Mecânico Mais Eficiente</h3>
+    <p>Nome: {{ mecanicoMaisEficiente.nome }}</p>
+    <p>Nível de Complexidade: {{ mecanicoMaisEficiente.nivelComplexidade }}</p>
+  </div>
+</div>
+
+<div class="dashboard-section">
+  <h2>Consertos</h2>
+  <p>Total de Consertos: {{ totalConsertos }}</p>
+  <h3>Consertos que Excederam o Tempo</h3>
+  <ul>
+    <li *ngFor="let conserto of consertosExcedidos">
+      Moto ID: {{ conserto.motoId }} - Tempo Excedido: {{ conserto.tempoExcedido }}
+    </li>
+  </ul>
+</div>
+
+<div class="dashboard-section">
+  <h2>Tipos de Conserto</h2>
+  <ul>
+    <li *ngFor="let tipo of tiposConserto">
+      {{ tipo.id }} - Tempo Estimado: {{ tipo.tempoEstimado }}
+    </li>
+  </ul>
+</div>

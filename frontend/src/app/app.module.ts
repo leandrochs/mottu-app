@@ -6,9 +6,10 @@ import { AppComponent } from './app.component';
 import { MecanicosComponent } from './mecanicos/mecanicos.component';
 import { ConsertoMotosComponent } from './conserto-motos/conserto-motos.component';
 import { TipoConsertosComponent } from './tipo-consertos/tipo-consertos.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
-  declarations: [AppComponent, MecanicosComponent, ConsertoMotosComponent, TipoConsertosComponent],
+  declarations: [AppComponent, MecanicosComponent, ConsertoMotosComponent, TipoConsertosComponent, DashboardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
