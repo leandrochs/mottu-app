@@ -121,3 +121,7 @@ namespace MottuMaintenance.Controllers
         }
     }
 }
+
+"""
+O método GetMecanicoMaisEficiente assume que a eficiência é baseada no tempo médio de conserto. Ele considera apenas mecânicos que tenham realizado consertos e ordena-os pelo menor tempo médio.
+"""
