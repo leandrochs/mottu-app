@@ -12,6 +12,6 @@ namespace MottuMaintenance.Models
         public int Idade { get; set; }
         public int TempoPorDia { get; set; }
         public int NivelComplexidade { get; set; }
-        public ICollection<ConsertoMoto> ConsertoMotos { get; set; }
+        public ICollection<ConsertoMoto>? ConsertoMotos { get; set; }
     }
 }

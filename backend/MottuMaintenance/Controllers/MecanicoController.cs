@@ -1,5 +1,3 @@
-// C:\Users\3silv\Documents\DEVELOPER\GitHub\mottu-app\backend\MottuMaintenance\Controllers\MecanicoController.cs
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MottuMaintenance.Data;
@@ -69,7 +67,7 @@ namespace MottuMaintenance.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MecanicoExists(id))
+                if (!_context.Mecanicos.Any(e => e.MecanicoId == id))
                 {
                     return NotFound();
                 }
@@ -98,18 +96,16 @@ namespace MottuMaintenance.Controllers
             return NoContent();
         }
 
-        private bool MecanicoExists(int id)
-        {
-            return _context.Mecanicos.Any(e => e.MecanicoId == id);
-        }
+        
 
-        // GET: api/Mecanico/MaisEficiente
+        // O método GetMecanicoMaisEficiente assume que a eficiência é baseada no tempo médio de conserto. Ele considera apenas mecânicos que tenham realizado consertos e ordena-os pelo menor tempo médio.
+        
         [HttpGet("MaisEficiente")]
         public async Task<ActionResult<Mecanico>> GetMecanicoMaisEficiente()
         {
             var mecanicoMaisEficiente = await _context.Mecanicos
-                .Where(m => m.ConsertoMotos.Any())
-                .OrderBy(m => m.ConsertoMotos.Average(c => c.TempoReal.HasValue ? c.TempoReal.Value : 0))
+                .Where(m => m.ConsertoMotos != null && m.ConsertoMotos.Any())
+                .OrderBy(m => m.ConsertoMotos!.Average(c => c.TempoReal.HasValue ? c.TempoReal.Value : 0))
                 .FirstOrDefaultAsync();
 
             if (mecanicoMaisEficiente == null)
@@ -121,7 +117,3 @@ namespace MottuMaintenance.Controllers
         }
     }
 }
-
-"""
-O método GetMecanicoMaisEficiente assume que a eficiência é baseada no tempo médio de conserto. Ele considera apenas mecânicos que tenham realizado consertos e ordena-os pelo menor tempo médio.
-"""

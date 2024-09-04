@@ -15,6 +15,6 @@ namespace MottuMaintenance.Models
         public int? TempoReal { get; set; }
         public DateTime DataEntrada { get; set; }
         public int? MecanicoId { get; set; }
-        public Mecanico Mecanico { get; set; }
+        public Mecanico? Mecanico { get; set; }
     }
 }
