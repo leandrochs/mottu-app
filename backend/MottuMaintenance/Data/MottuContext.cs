@@ -12,5 +12,20 @@ namespace MottuMaintenance.Data
         public DbSet<Mecanico> Mecanicos { get; set; }
         public DbSet<ConsertoMoto> ConsertoMotos { get; set; }
         public DbSet<TipoConserto> TipoConsertos { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ConsertoMoto>()
+                .HasOne(c => c.TipoConserto)
+                .WithMany()
+                .HasForeignKey(c => c.TipoConsertoId);
+
+            modelBuilder.Entity<ConsertoMoto>()
+                .HasOne(c => c.Mecanico)
+                .WithMany(m => m.ConsertoMotos)
+                .HasForeignKey(c => c.MecanicoId);
+        }
     }
 }
