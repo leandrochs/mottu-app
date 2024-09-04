@@ -1,7 +1,7 @@
 
 {
   "ConnectionStrings": {
-    "DefaultConnection": ""
+    "DefaultConnection": "Host=localhost;Database=mottu_maintenance;Username=seu_user_name;Password=sua_senha"
   },
   "Logging": {
     "LogLevel": {
