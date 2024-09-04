@@ -1,1 +1,6 @@
-<p>tipo-consertos works!</p>
+<h2>Tipos de Conserto</h2>
+<ul>
+  <li *ngFor="let tipo of tipoConsertos">
+    {{ tipo.id }} - Tempo Estimado: {{ tipo.tempoEstimado }}
+  </li>
+</ul>

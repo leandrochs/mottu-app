@@ -1,1 +1,11 @@
-<p>mecanicos works!</p>
+<h2>Lista de Mecânicos</h2>
+<ul>
+  <li *ngFor="let mecanico of mecanicos">
+    {{ mecanico.nome }} - Nível de Complexidade: {{ mecanico.nivelComplexidade }}
+  </li>
+</ul>
+
+<h3>Mecânico Mais Eficiente</h3>
+<p *ngIf="mecanicoMaisEficiente">
+  {{ mecanicoMaisEficiente.nome }} - Tempo Médio: {{ mecanicoMaisEficiente.tempoMedio }}
+</p>
