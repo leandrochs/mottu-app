@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using MottuMaintenance.Data;
 using MottuMaintenance.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MottuMaintenance.Controllers
@@ -51,6 +52,72 @@ namespace MottuMaintenance.Controllers
             return CreatedAtAction(nameof(GetMecanico), new { id = mecanico.MecanicoId }, mecanico);
         }
 
-        // Adicione métodos PUT e DELETE conforme necessário
+        // PUT: api/Mecanico/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutMecanico(int id, Mecanico mecanico)
+        {
+            if (id != mecanico.MecanicoId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(mecanico).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MecanicoExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // DELETE: api/Mecanico/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMecanico(int id)
+        {
+            var mecanico = await _context.Mecanicos.FindAsync(id);
+            if (mecanico == null)
+            {
+                return NotFound();
+            }
+
+            _context.Mecanicos.Remove(mecanico);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool MecanicoExists(int id)
+        {
+            return _context.Mecanicos.Any(e => e.MecanicoId == id);
+        }
+
+        // GET: api/Mecanico/MaisEficiente
+        [HttpGet("MaisEficiente")]
+        public async Task<ActionResult<Mecanico>> GetMecanicoMaisEficiente()
+        {
+            var mecanicoMaisEficiente = await _context.Mecanicos
+                .Where(m => m.ConsertoMotos.Any())
+                .OrderBy(m => m.ConsertoMotos.Average(c => c.TempoReal.HasValue ? c.TempoReal.Value : 0))
+                .FirstOrDefaultAsync();
+
+            if (mecanicoMaisEficiente == null)
+            {
+                return NotFound("Nenhum mecânico encontrado com consertos realizados.");
+            }
+
+            return mecanicoMaisEficiente;
+        }
     }
 }
