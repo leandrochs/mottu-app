@@ -13,24 +13,6 @@ namespace MottuMaintenance.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ConsertoMotos",
-                columns: table => new
-                {
-                    ConsertoMotoId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    MotoId = table.Column<int>(type: "integer", nullable: false),
-                    ComplexidadeDoConserto = table.Column<int>(type: "integer", nullable: false),
-                    TipoConsertoId = table.Column<int>(type: "integer", nullable: false),
-                    TempoReal = table.Column<int>(type: "integer", nullable: true),
-                    DataEntrada = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    MecanicoId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ConsertoMotos", x => x.ConsertoMotoId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Mecanicos",
                 columns: table => new
                 {
@@ -58,6 +40,45 @@ namespace MottuMaintenance.Migrations
                 {
                     table.PrimaryKey("PK_TipoConsertos", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "ConsertoMotos",
+                columns: table => new
+                {
+                    ConsertoMotoId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    MotoId = table.Column<int>(type: "integer", nullable: false),
+                    ComplexidadeDoConserto = table.Column<int>(type: "integer", nullable: false),
+                    TipoConsertoId = table.Column<int>(type: "integer", nullable: false),
+                    TempoReal = table.Column<int>(type: "integer", nullable: true),
+                    DataEntrada = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    MecanicoId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConsertoMotos", x => x.ConsertoMotoId);
+                    table.ForeignKey(
+                        name: "FK_ConsertoMotos_Mecanicos_MecanicoId",
+                        column: x => x.MecanicoId,
+                        principalTable: "Mecanicos",
+                        principalColumn: "MecanicoId");
+                    table.ForeignKey(
+                        name: "FK_ConsertoMotos_TipoConsertos_TipoConsertoId",
+                        column: x => x.TipoConsertoId,
+                        principalTable: "TipoConsertos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConsertoMotos_MecanicoId",
+                table: "ConsertoMotos",
+                column: "MecanicoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConsertoMotos_TipoConsertoId",
+                table: "ConsertoMotos",
+                column: "TipoConsertoId");
         }
 
         /// <inheritdoc />

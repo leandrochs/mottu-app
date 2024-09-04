@@ -42,6 +42,9 @@ namespace MottuMaintenance.Migrations
                     b.Property<int>("MotoId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Observacoes")
+                        .HasColumnType("text");
+
                     b.Property<int?>("TempoReal")
                         .HasColumnType("integer");
 
@@ -51,6 +54,8 @@ namespace MottuMaintenance.Migrations
                     b.HasKey("ConsertoMotoId");
 
                     b.HasIndex("MecanicoId");
+
+                    b.HasIndex("TipoConsertoId");
 
                     b.ToTable("ConsertoMotos");
                 });
@@ -103,7 +108,15 @@ namespace MottuMaintenance.Migrations
                         .WithMany("ConsertoMotos")
                         .HasForeignKey("MecanicoId");
 
+                    b.HasOne("MottuMaintenance.Models.TipoConserto", "TipoConserto")
+                        .WithMany()
+                        .HasForeignKey("TipoConsertoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Mecanico");
+
+                    b.Navigation("TipoConserto");
                 });
 
             modelBuilder.Entity("MottuMaintenance.Models.Mecanico", b =>

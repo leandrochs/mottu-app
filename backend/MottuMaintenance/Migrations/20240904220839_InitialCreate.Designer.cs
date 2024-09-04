@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MottuMaintenance.Migrations
 {
     [DbContext(typeof(MottuContext))]
-    [Migration("20240904183859_InitialCreate")]
+    [Migration("20240904220839_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -52,6 +52,10 @@ namespace MottuMaintenance.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("ConsertoMotoId");
+
+                    b.HasIndex("MecanicoId");
+
+                    b.HasIndex("TipoConsertoId");
 
                     b.ToTable("ConsertoMotos");
                 });
@@ -96,6 +100,28 @@ namespace MottuMaintenance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TipoConsertos");
+                });
+
+            modelBuilder.Entity("MottuMaintenance.Models.ConsertoMoto", b =>
+                {
+                    b.HasOne("MottuMaintenance.Models.Mecanico", "Mecanico")
+                        .WithMany("ConsertoMotos")
+                        .HasForeignKey("MecanicoId");
+
+                    b.HasOne("MottuMaintenance.Models.TipoConserto", "TipoConserto")
+                        .WithMany()
+                        .HasForeignKey("TipoConsertoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Mecanico");
+
+                    b.Navigation("TipoConserto");
+                });
+
+            modelBuilder.Entity("MottuMaintenance.Models.Mecanico", b =>
+                {
+                    b.Navigation("ConsertoMotos");
                 });
 #pragma warning restore 612, 618
         }
