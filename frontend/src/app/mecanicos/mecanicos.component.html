@@ -5,6 +5,14 @@
   <p>Nível {{mecanico.nivelComplexidadeAtual}}: {{mecanico.nome}} (Eficiência: {{mecanico['eficienciaNivel' + mecanico.nivelComplexidadeAtual] | number:'1.2-2'}})</p>
 </div>
 
+<div style="display: block;">
+  <canvas baseChart
+    [data]="radarChartData"
+    [options]="radarChartOptions"
+    [type]="radarChartType">
+  </canvas>
+</div>
+
 <table>
   <thead>
     <tr>
@@ -60,5 +68,3 @@
     <button type="button" (click)="cancelarEdicao()">Cancelar</button>
   </form>
 </div>
-
-<!-- Aqui você pode adicionar o gráfico de radar usando uma biblioteca como Chart.js ou ng2-charts -->

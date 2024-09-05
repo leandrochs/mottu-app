@@ -8,6 +8,7 @@ import { ConsertoMotosComponent } from './conserto-motos/conserto-motos.componen
 import { TipoConsertosComponent } from './tipo-consertos/tipo-consertos.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [AppComponent, MecanicosComponent, ConsertoMotosComponent, TipoConsertosComponent, DashboardComponent],
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

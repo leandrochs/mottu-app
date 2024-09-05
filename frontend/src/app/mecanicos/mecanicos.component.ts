@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MecanicoService } from '../services/mecanico.service';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-mecanicos',
@@ -7,9 +9,22 @@ import { MecanicoService } from '../services/mecanico.service';
   styleUrls: ['./mecanicos.component.css']
 })
 export class MecanicosComponent implements OnInit {
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+
   mecanicos: any[] = [];
   mecanicosMaisEficientes: any[] = [];
   mecanicoSelecionado: any = null;
+
+  // Radar Chart
+  public radarChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+  };
+  public radarChartLabels: string[] = ['Nível 1', 'Nível 2', 'Nível 3'];
+  public radarChartData: ChartData<'radar'> = {
+    labels: this.radarChartLabels,
+    datasets: []
+  };
+  public radarChartType: ChartType = 'radar';
 
   constructor(private mecanicoService: MecanicoService) { }
 
@@ -22,6 +37,7 @@ export class MecanicosComponent implements OnInit {
     this.mecanicoService.getMecanicos().subscribe(
       data => {
         this.mecanicos = data;
+        this.atualizarGraficoRadar();
       },
       error => console.error('Erro ao carregar mecânicos:', error)
     );
@@ -64,5 +80,13 @@ export class MecanicosComponent implements OnInit {
       },
       error => console.error('Erro ao promover mecânico:', error)
     );
+  }
+
+  atualizarGraficoRadar(): void {
+    this.radarChartData.datasets = this.mecanicos.map(mecanico => ({
+      data: [mecanico.eficienciaNivel1, mecanico.eficienciaNivel2, mecanico.eficienciaNivel3],
+      label: mecanico.nome
+    }));
+    this.chart?.update();
   }
 }

@@ -17,6 +17,6 @@ namespace MottuMaintenance.Models
         public double EficienciaNivel1 { get; set; }
         public double EficienciaNivel2 { get; set; }
         public double EficienciaNivel3 { get; set; }
-        public List<ConsertoMoto> ConsertoMotos { get; set; }
+        public List<ConsertoMoto>? ConsertoMotos { get; set; }
     }
 }
