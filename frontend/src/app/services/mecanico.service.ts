@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MecanicoService {
-  private apiUrl = 'http://localhost:5000/api/mecanico';
+  private apiUrl = 'http://localhost:5000/api/mecanico'; // Ajuste conforme necessário
+
   constructor(private http: HttpClient) { }
 
   getMecanicos(): Observable<any[]> {
@@ -27,5 +28,9 @@ export class MecanicoService {
 
   getMecanicosMaisEficientes(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/maisEficientes`);
+  }
+
+  getEvolucaoEficiencia(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${id}/evolucaoEficiencia`);
   }
 }

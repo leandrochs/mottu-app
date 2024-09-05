@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MecanicoService } from '../services/mecanico.service';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
@@ -25,6 +25,21 @@ export class MecanicosComponent implements OnInit {
     datasets: []
   };
   public radarChartType: ChartType = 'radar';
+
+  // Line Chart para evolução da eficiência
+  public lineChartData: ChartConfiguration['data'] = {
+    datasets: [],
+    labels: []
+  };
+  public lineChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  };
+  public lineChartType: ChartType = 'line';
 
   constructor(private mecanicoService: MecanicoService) { }
 
@@ -54,6 +69,7 @@ export class MecanicosComponent implements OnInit {
 
   editarMecanico(mecanico: any): void {
     this.mecanicoSelecionado = { ...mecanico };
+    this.carregarEvolucaoEficiencia(mecanico.id);
   }
 
   salvarEdicao(): void {
@@ -88,5 +104,18 @@ export class MecanicosComponent implements OnInit {
       label: mecanico.nome
     }));
     this.chart?.update();
+  }
+
+  carregarEvolucaoEficiencia(mecanicoId: number): void {
+    this.mecanicoService.getEvolucaoEficiencia(mecanicoId).subscribe(
+      data => {
+        this.lineChartData.datasets = [
+          { data: data.map(d => d.eficiencia), label: 'Eficiência' }
+        ];
+        this.lineChartData.labels = data.map(d => d.data);
+        this.chart?.update();
+      },
+      error => console.error('Erro ao carregar evolução da eficiência:', error)
+    );
   }
 }
