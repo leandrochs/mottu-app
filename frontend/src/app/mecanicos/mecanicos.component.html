@@ -1,11 +1,64 @@
-<h2>Lista de Mecânicos</h2>
-<ul>
-  <li *ngFor="let mecanico of mecanicos">
-    {{ mecanico.nome }} - Nível de Complexidade: {{ mecanico.nivelComplexidade }}
-  </li>
-</ul>
+<h2>Mecânicos</h2>
 
-<h3>Mecânico Mais Eficiente</h3>
-<p *ngIf="mecanicoMaisEficiente">
-  {{ mecanicoMaisEficiente.nome }} - Tempo Médio: {{ mecanicoMaisEficiente.tempoMedio }}
-</p>
+<h3>Mecânicos Mais Eficientes</h3>
+<div *ngFor="let mecanico of mecanicosMaisEficientes">
+  <p>Nível {{mecanico.nivelComplexidadeAtual}}: {{mecanico.nome}} (Eficiência: {{mecanico['eficienciaNivel' + mecanico.nivelComplexidadeAtual] | number:'1.2-2'}})</p>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Idade</th>
+      <th>Tempo de Casa (meses)</th>
+      <th>Nível de Complexidade</th>
+      <th>Eficiência Nível 1</th>
+      <th>Eficiência Nível 2</th>
+      <th>Eficiência Nível 3</th>
+      <th>Serviços Nível 1</th>
+      <th>Serviços Nível 2</th>
+      <th>Serviços Nível 3</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let mecanico of mecanicos">
+      <td>{{mecanico.nome}}</td>
+      <td>{{mecanico.idade}}</td>
+      <td>{{mecanico.tempoDeContratacaoMeses}}</td>
+      <td>{{mecanico.nivelComplexidadeAtual}}</td>
+      <td>{{mecanico.eficienciaNivel1 | number:'1.2-2'}}</td>
+      <td>{{mecanico.eficienciaNivel2 | number:'1.2-2'}}</td>
+      <td>{{mecanico.eficienciaNivel3 | number:'1.2-2'}}</td>
+      <td>{{mecanico.servicosNivel1}}</td>
+      <td>{{mecanico.servicosNivel2}}</td>
+      <td>{{mecanico.servicosNivel3}}</td>
+      <td>
+        <button (click)="editarMecanico(mecanico)">Editar</button>
+        <button (click)="promoverMecanico(mecanico.id)" [disabled]="mecanico.nivelComplexidadeAtual >= 3">Promover</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="mecanicoSelecionado">
+  <h3>Editar Mecânico</h3>
+  <form (ngSubmit)="salvarEdicao()">
+    <label>
+      Nome:
+      <input [(ngModel)]="mecanicoSelecionado.nome" name="nome" required>
+    </label>
+    <label>
+      Idade:
+      <input type="number" [(ngModel)]="mecanicoSelecionado.idade" name="idade" required>
+    </label>
+    <label>
+      Tempo de Casa (meses):
+      <input type="number" [(ngModel)]="mecanicoSelecionado.tempoDeContratacaoMeses" name="tempoDeContratacaoMeses" required>
+    </label>
+    <button type="submit">Salvar</button>
+    <button type="button" (click)="cancelarEdicao()">Cancelar</button>
+  </form>
+</div>
+
+<!-- Aqui você pode adicionar o gráfico de radar usando uma biblioteca como Chart.js ou ng2-charts -->

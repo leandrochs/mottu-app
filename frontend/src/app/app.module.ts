@@ -7,13 +7,15 @@ import { MecanicosComponent } from './mecanicos/mecanicos.component';
 import { ConsertoMotosComponent } from './conserto-motos/conserto-motos.component';
 import { TipoConsertosComponent } from './tipo-consertos/tipo-consertos.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, MecanicosComponent, ConsertoMotosComponent, TipoConsertosComponent, DashboardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

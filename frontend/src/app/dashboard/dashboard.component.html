@@ -3,10 +3,13 @@
 <div class="dashboard-section">
   <h2>Mecânicos</h2>
   <p>Total de Mecânicos: {{ totalMecanicos }}</p>
-  <div *ngIf="mecanicoMaisEficiente">
-    <h3>Mecânico Mais Eficiente</h3>
-    <p>Nome: {{ mecanicoMaisEficiente.nome }}</p>
-    <p>Nível de Complexidade: {{ mecanicoMaisEficiente.nivelComplexidade }}</p>
+  <div *ngIf="mecanicosMaisEficientes.length > 0">
+    <h3>Mecânicos Mais Eficientes</h3>
+    <ul>
+      <li *ngFor="let mecanico of mecanicosMaisEficientes">
+        Nome: {{ mecanico.nome }} - Nível de Complexidade: {{ mecanico.nivelComplexidade }}
+      </li>
+    </ul>
   </div>
 </div>
 

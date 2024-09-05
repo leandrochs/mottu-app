@@ -10,7 +10,7 @@ import { TipoConsertoService } from '../services/tipo-conserto.service';
 })
 export class DashboardComponent implements OnInit {
   totalMecanicos: number = 0;
-  mecanicoMaisEficiente: any;
+  mecanicosMaisEficientes: any[] = [];
   totalConsertos: number = 0;
   consertosExcedidos: any[] = [];
   tiposConserto: any[] = [];
@@ -33,11 +33,11 @@ export class DashboardComponent implements OnInit {
       (error) => console.error('Erro ao carregar mecânicos:', error)
     );
 
-    this.mecanicoService.getMecanicoMaisEficiente().subscribe(
-      (mecanico) => {
-        this.mecanicoMaisEficiente = mecanico;
+    this.mecanicoService.getMecanicosMaisEficientes().subscribe(
+      (mecanicos) => {
+        this.mecanicosMaisEficientes = mecanicos;
       },
-      (error) => console.error('Erro ao carregar mecânico mais eficiente:', error)
+      (error) => console.error('Erro ao carregar mecânicos mais eficientes:', error)
     );
 
     this.consertoMotoService.getConsertoMotos().subscribe(

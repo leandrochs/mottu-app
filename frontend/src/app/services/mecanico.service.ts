@@ -17,19 +17,15 @@ export class MecanicoService {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
-  createMecanico(mecanico: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, mecanico);
-  }
-
   updateMecanico(id: number, mecanico: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, mecanico);
+    return this.http.put(`${this.apiUrl}/${id}`, mecanico);
   }
 
-  deleteMecanico(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  promoverMecanico(id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/promover/${id}`, {});
   }
 
-  getMecanicoMaisEficiente(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/MaisEficiente`);
+  getMecanicosMaisEficientes(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/maisEficientes`);
   }
 }
